@@ -17,7 +17,11 @@ int main(){
     case '+': z = soma(x, y); break;
     case '-': z = subtracao(x,y); break;
     case '*': z = produto(x,y); break;
-    case '/': z = divisao(x,y); break;
+    case '/': if (x == 0 || y == 0){
+        z = 0; break;
+    }else{
+    z = divisao(x,y); break;
+    }
     default: printf("nada \n");
     }
 
