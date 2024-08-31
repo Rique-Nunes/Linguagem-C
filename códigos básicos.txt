@@ -1,0 +1,14 @@
+gcc "arquivo 1" "arquivo 2" "arquivo 3" -o nomearquivo.exe
+
+
+includes básicos
+#include <stdio.h>
+#include <stdlib.h>
+
+como fazer uma biblioteca:
+primeiro crie o arquivo para ter o main
+segundo crie o arquivo .h que vai conter o prototipo da função que vai ser chamado
+terceiro crie o arquivo .c com mesmo nome que vai contar a função em si que vai retornar algo
+#nao esqueça de importar o arquivo.h dentro do arquivo.c 
+assim voce so precisa importar o arquivo.h dentro do main.c
+pronto;

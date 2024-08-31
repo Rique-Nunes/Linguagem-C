@@ -2,7 +2,7 @@
 #include "stdio.h"
 #include "math.h"
 
-int main()
+void main()
 {
     int planeta;
     float massa, peso, gravidade;
@@ -35,5 +35,4 @@ int main()
     }
     peso = (massa / 10) * gravidade;
     printf("o seu peso neste planeta e: %f ", peso);
-    return 0;
 }

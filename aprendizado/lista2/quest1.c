@@ -2,7 +2,7 @@
 #include "stdlib.h"
 #include "math.h"
 
-int main()
+void main()
 {
     float peso, altura, imc;
     printf("Fazendo o calculo do IMC, \nDigite o peso:");
@@ -36,6 +36,4 @@ int main()
     {
         printf("Sua condicao e Obesidade grau 3");
     }
-
-    return 0;
 }
