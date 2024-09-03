@@ -4,15 +4,17 @@
 
 void main()
 {
-    int planeta;
+    int planeta; /*int indica a variavel como tipo inteiro*/
     float massa, peso, gravidade;
     printf("Vamos calcular seu peso em qualquer planeta\nDigite seu peso: ");
     scanf("%f", &massa);
     printf("Agora digite o planeta para determinar seu peso: ");
     scanf("%d", &planeta);
-    switch (planeta)
+    switch (planeta) /*o switch representa as variações de uma variavel 
+                        com número inteiro pode assumir*/
     {
-    case 1:
+    case 1: /*caso seja 1 ele executa o que tiver depois dos dois pontos
+            alerta! se não tiver o "break;" para parar o código ele testará todos os outros*/
         gravidade = 0.37;
         break;
     case 2:
