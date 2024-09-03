@@ -7,7 +7,7 @@ void main() /*inicializador do código, tudo dentro das {} será executado*/
     float peso, altura, imc; /*inicialização das variáveis, float indica números do conjunto dos Reais*/
 
     printf("Fazendo o calculo do IMC, \nDigite o peso:"); /*tudo dentro dos parenteses será
-                                                        imprimido na tela, textos imprimidos tem que ser entre asoas simples ou duplas,
+                                                        imprimido na tela, textos imprimidos tem que ser entre aspas simples ou duplas,
                                                         uma ou outra, nunca as duas (esse \n é quebra de linha)*/
 
     scanf("%f", &peso); /*comando para scanear o número digitado,
@@ -20,7 +20,7 @@ void main() /*inicializador do código, tudo dentro das {} será executado*/
     imc = peso / pow(altura, 2); /*atribui á variavel imc, o valor da formula,
                                     pow() é como faz para exponenciar a altura por 2 (poderia ser outro número inteiro)*/
 
-    if (imc < 18.5) /*if é o condicional (se), a condição fica entre {}*/
+    if (imc < 18.5) /*if é o condicional (se), a condição fica entre () e a execução entre {}*/
     {
         printf("Sua condicao e abaixo do esperado"); /*aqui imprime na tela*/
     }
@@ -40,7 +40,7 @@ void main() /*inicializador do código, tudo dentro das {} será executado*/
     {
         printf("Sua condicao e Obesidade grau 2");
     }
-    else /*esse é o selecionado caso nenhum dos outros seja verdade provavel (então)*/
+    else /*esse é o selecionado caso nenhum dos outros seja verdade, em portugues seria algo como (então)*/
     {
         printf("Sua condicao e Obesidade grau 3");
     }
