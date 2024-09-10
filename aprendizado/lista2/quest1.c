@@ -17,8 +17,7 @@ void main() /*inicializador do código, tudo dentro das {} será executado*/
     printf("Digite a altura: "); /*só lembrando que os comandos de palavras chave como printf e scanf tem que terminar com ;*/
     scanf("%f", &altura);
 
-    imc = peso / pow(altura, 2); /*atribui á variavel imc, o valor da formula,
-                                    pow() é como faz para exponenciar a altura por 2 (poderia ser outro número inteiro)*/
+    imc = peso / (altura * altura); /*atribui á variavel imc, o valor da formula*/
 
     if (imc < 18.5) /*if é o condicional (se), a condição fica entre () e a execução entre {}*/
     {
@@ -36,7 +35,7 @@ void main() /*inicializador do código, tudo dentro das {} será executado*/
     {
         printf("Sua condicao e Obesidade grau 1");
     }
-    else if (imc < 40)
+    else if (imc < 40.0)
     {
         printf("Sua condicao e Obesidade grau 2");
     }
