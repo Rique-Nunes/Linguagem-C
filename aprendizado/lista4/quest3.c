@@ -14,12 +14,10 @@ void main()
     scanf("%d", &tempo);
     // existe a função pow(), porém estou fazendo sem ela, a única forma que pensei foi:
     tempo *= 12;
-    /*for (int i = 0; i <= tempo; i++) //tentativa de juros compostos
+    /*for (int i = 0; i <= tempo; i++) tentativa de juros compostos
     {
         rendimento *= (1 + (rendimento / 100));
-    }
-   montante = aplicacao * rendimento;
-   */
+    }montante = aplicacao * rendimento;*/
     montante = aplicacao + (aplicacao * (rendimento / 100) * tempo); // juros simples
     printf("O montante resultante e: %.2f", montante);
 }

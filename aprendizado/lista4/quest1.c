@@ -8,8 +8,8 @@ void main()
     scanf("%d", &n);
     printf("digite o valor que quer ver os multiplos: ");
     scanf("%d", &y);
-    for (int i = 1; i < n; i++)
+    for (int i = y; i < n; i += y)
     {
-        printf("%d:%d\n", y, y * i);
+        printf("%d:%d\n", y, i);
     }
 }
