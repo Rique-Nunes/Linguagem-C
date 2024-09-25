@@ -10,7 +10,7 @@ void main()
     printf("quantos termos quer que aparececa: ");
     scanf("%d", &termos);
 
-    for (int i = 0; i <= termos; i++)
+    for (int i = 0; i < termos; i++)
     {
         printf("%d\n", numero);
         numero *= multiplicador;
