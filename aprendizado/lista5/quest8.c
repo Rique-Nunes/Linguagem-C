@@ -27,9 +27,11 @@ void main()
         scanf("%d", &carteira);
         printf("digite a quantidade de multas: ");
         scanf("%d", &qtd_multas);
-        printf("digite o valor da multa: ");
-        scanf("%d", &multa);
-        multa_soma = qtd_multas * multa;
+        for(int i = 0; i < qtd_multas; i++){
+           printf("digite o valor da multa: ");
+           scanf("%d", &multa);
+           multa_soma += multa;
+        }
         printf("divida: %d", multa_soma);
         if (qtd_multas > maior_multa)
         {
