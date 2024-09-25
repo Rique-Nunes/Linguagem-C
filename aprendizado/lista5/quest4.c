@@ -7,7 +7,7 @@
 
 void main()
 {
-    int n, a1, r;
+    int n, a1, r, termo =0;
     printf("Digite o primeiro termo da PA: ");
     scanf("%d", &a1);
     printf("Digite a razao da PA: ");
@@ -18,5 +18,7 @@ void main()
     for (int i = 1; i <= n; i++)
     {
         printf("%d\n", a1 + ((i - 1) * r));
+        //printf("%d\n",a1 + termo);
+        //termo += r;
     }
 }
