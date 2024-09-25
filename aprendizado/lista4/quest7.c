@@ -4,7 +4,7 @@
 void main()
 {
     char genero, resposta;
-    int quanti_sim = 0, quanti_nao = 0, quanti_masculino = 0, quanti_feminino = 0, x;
+    int porcent_masc, porcent_fem, quanti_sim = 0, quanti_nao = 0, quanti_masculino = 0, quanti_feminino = 0, x;
     printf("quantas pessoas participaram");
     scanf("%d", &x);
 
@@ -37,7 +37,9 @@ void main()
     }
     printf("Numero de pessoas que gostaram: %d \n", quanti_sim);
     printf("Numero de pessoas que nao gostaram: %d \n", quanti_nao);
-    if (quanti_masculino > quanti_feminino)
+    porcent_masc = quanti_masculino / ((quanti_feminino + quanti_masculino)*100);
+    porcent_fem = quanti_feminino/ ((quanti_masculino + quanti_feminino)*100);
+    if (porcent_masc > porcent_fem)
     {
         printf("maior aceitacao do genero masculino");
     }
@@ -45,4 +47,6 @@ void main()
     {
         printf("maior aceitacao do genero feminino");
     }
+    printf("porcentagem masculina: %d", porcent_masc):
+    printf("porcentagem feminina: %d", porcent_fem);
 }
