@@ -15,7 +15,7 @@ encontradas;
 void main()
 {
     float altura, cont_mulher = 0, media_mulher = 0, media_populacao = 0, percetual_homens = 0;
-    char sexo;
+    char sexo = 'a';
 
     for (int i = 1; i <= 5; i++)
     {

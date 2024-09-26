@@ -12,3 +12,5 @@ terceiro crie o arquivo .c com mesmo nome que vai contar a função em si que va
 #nao esqueça de importar o arquivo.h dentro do arquivo.c 
 assim voce so precisa importar o arquivo.h dentro do main.c
 pronto;
+
+ /*printf("O seu IMC e %f \n", imc);*/
