@@ -8,7 +8,7 @@ n = 7
 1 2 3 4 5
 6 5 4 3 2 1
 1 2 3 4 5 6 7*/
-#include "stdio.h"
+#include <stdio.h>
 void main()
 {
     int numero;
