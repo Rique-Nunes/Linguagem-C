@@ -1,15 +1,26 @@
-/*Desenvolver uma função que calcule o n-ésimo
-termo da sequência de Fibonacci.*/
 #include <stdio.h>
-void fibo(int numero)
+int fibo(int numero)
 {
-    if (numero < 2)
+    int termo;
+    if (numero <= 2)
     {
         return 1;
     }
-    int a = 1, b = 2, c = 3;
-    printf("%d", a);
-    for (int i = 3; i <= numero; i++){
-        printf("%d" a)
+    int a = 0, b = 1, c;
+    printf("%d\n", a);
+    for (int i = 3; i <= numero; i++)
+    {
+        c = a + b;
+        a = b;
+        b = c;
     }
+    termo = c;
+    return termo;
+}
+
+void main()
+{
+    int numero;
+    numero = fibo(6);
+    printf("%d", numero);
 }
