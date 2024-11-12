@@ -11,19 +11,19 @@ Notas:
 retornará 0.
 2. Apresentar a main chamando a função implementada.*/
 #include <stdio.h>
-int vetorial(int lista[], int numero);
+int vetorial(int lista[], int numero, int tamanho);
 
 void main()
 {
 
     int numeros[12] = {5, 7, 3, 0, 5, 9, 0, 1, 0, 3, 4, 8};
-    vetorial(numeros, 4);
+    vetorial(numeros, 2, 12);
 }
 
-int vetorial(int lista[], int numero)
+int vetorial(int lista[], int numero, int tamanho)
 {
     int sub_vetor[3], indice = 0;
-    int tamanho = 12, qtd_zeros = numero - 1, contador_zero = 0;
+    int qtd_zeros = numero, contador_zero = 0;
     for (int i = 0; i < tamanho; i++)
     {
         if (lista[i] == 0)
@@ -32,18 +32,18 @@ int vetorial(int lista[], int numero)
         }
         if (contador_zero == qtd_zeros)
         {
-            for (int j = i - 3; j >= 0 && indice < 3; j--)
+            for (int j = i - 1; lista[j] == 0 || indice <= 2; j--)
             {
                 if (lista[j] != 0)
                 {
                     sub_vetor[indice] = lista[j];
                     indice++;
                 }
+                if (lista[j] == 0)
+                {
+                    break;
+                }
             }
-            break;
-        }
-        if (contador_zero > qtd_zeros)
-        {
             break;
         }
     }
@@ -52,5 +52,10 @@ int vetorial(int lista[], int numero)
     {
         printf("%d\n", sub_vetor[h]);
     }
+    /*
+    for (int i = 0; i <= 2; i++) {
+        lista[i] = sub_vetor[i];
+    }
+    */
     return 1;
 }
