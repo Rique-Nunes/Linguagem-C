@@ -13,7 +13,7 @@ void main()
     scanf("%d", &primeiro);
     printf("digite o segundo numero para testar: ");
     scanf("%d", &segundo);
-    // por algum motivo não consigo testar direto no if
+
     teste = testando(primeiro, segundo);
 
     if (teste == 1)
@@ -40,7 +40,7 @@ int testando(int num1, int num2)
     {
         return 1;
     }
-    // esqueci
+    // se a base for 0, para ser válido o expoente também tem que ser 0
     if (num1 == 0 && num2 != 0)
     {
         return 0;

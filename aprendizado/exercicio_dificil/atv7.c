@@ -9,19 +9,19 @@ void maior_valor(float num[], int tamanho, float *maior, float *menor);
 
 void main()
 {
-    float numeros[5] = {1, 2, 3, 4, 5};
+    float numeros[5] = {1.5, 2.1, 3.5, 4.1, 5.3};
     float maior_inferior, menor_superior;
     int tamanho = 5;
 
     maior_valor(numeros, tamanho, &maior_inferior, &menor_superior);
 
-    printf("o maior_inferior e: %f\n", maior_inferior);
-    printf("o menor_superior e: %f", menor_superior);
+    printf("o maior_inferior e: %.2f\n", maior_inferior);
+    printf("o menor_superior e: %.2f", menor_superior);
 }
 
 void maior_valor(float num[], int tamanho, float *maior, float *menor)
 {
-    float maior_inferior = 0, menor_superior = INT_MAX, media = 0, contador = 0;
+    float maior_inferior = INT_MIN, menor_superior = INT_MAX, media = 0, contador = 0;
 
     for (int j = 0; j < tamanho; j++)
     {
