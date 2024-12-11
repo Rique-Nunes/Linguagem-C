@@ -1,4 +1,5 @@
 //saber se os ambos os numeros possuem o mesmo numero de algarismos
+//se tiverem mesma quantidade retorna 1, senão retorna 0
 #include <stdio.h>
 
 int algarismo(int n1, int n2);
@@ -8,7 +9,7 @@ void main(){
     printf("escreva os numeros: ");
     scanf("%d", &num1);
     scanf("%d", &num2);
-    algarismo(num1, num2); 
+    printf("%d",algarismo(num1, num2)); 
 }
 
 int algarismo(int n1, int n2){

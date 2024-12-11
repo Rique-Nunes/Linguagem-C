@@ -1,8 +1,8 @@
 //criar um vetor que contenha entre os primeiros elementos os multiplos de um numero N
 //e os ultimos os não multiplos
 //8,6,3,7,1,9,4
-//6,3,9,  8,7,1,4
-//
+//6,3,9, 8,7,1,4
+//os tres primeiros são multiplos de 3 e o resto não são.
 #include <stdio.h>
 
 void ordem (int vetA[],int vetB[], int tamanho, int numero );
