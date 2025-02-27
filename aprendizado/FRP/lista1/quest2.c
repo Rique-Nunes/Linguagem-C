@@ -1,3 +1,7 @@
+//Desenvolver uma função que, dada uma matriz
+//Mm×n, determine se um número X se encontra
+//na linha L da matriz.
+
 #include <stdio.h>
 
 void matrizes(int linha, int coluna, int matA[linha][coluna], int matB[linha][coluna]);
