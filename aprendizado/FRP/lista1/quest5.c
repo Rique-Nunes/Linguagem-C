@@ -1,3 +1,13 @@
+//Implementar uma função que, dada uma matriz
+//Mm×n, gere um vetor V de tamanho n, onde
+//cada elemento do vetor consiste na soma dos
+//elementos de uma coluna de M. Ou seja, o
+//elemento V[0] consiste na soma dos elementos
+//da primeira coluna de M, o elemento V[1]
+//consiste na soma dos elementos da segunda
+//coluna de M, e assim por diante.
+
+
 #include <stdio.h>
 void somador(int linha, int coluna, int matA[linha][coluna], int vetB[coluna]);
 void main()
