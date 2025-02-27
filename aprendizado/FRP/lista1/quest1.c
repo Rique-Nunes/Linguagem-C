@@ -1,3 +1,6 @@
+//Faça uma função que, dada uma matriz Mm×n de
+//reais, gere a matriz Mt sua transposta.
+
 #include <stdio.h>
 
 void main(){
