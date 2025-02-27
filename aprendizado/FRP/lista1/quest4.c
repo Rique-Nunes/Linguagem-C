@@ -1,3 +1,6 @@
+//Fazer uma função que, dada uma matriz Mn×n,
+//determine se ela é simétrica.
+
 #include <stdio.h>
 void resultado(int linha, int coluna, int matA[linha][coluna]);
 int verificador(int linha, int coluna);
