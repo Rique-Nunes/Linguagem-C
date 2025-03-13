@@ -59,7 +59,8 @@ int total_ano(int linhas, int colunas, int matA[linhas][colunas])
 // b. Dado um mês fornecido pelo usuário, determinar o total vendido nesse mês;
 int total_mes(int linhas, int colunas, int matA[linhas][colunas], int mes)
 {
-    int i, j, soma_mes = 0;
+    int j, soma_mes = 0;
+    mes--;
 
     for (j = 0; j < colunas; j++)
     {
@@ -84,11 +85,7 @@ int maior_mes(int linhas, int colunas, int matA[linhas][colunas])
     int i, j, maior_mes = 0, contador, mes;
     for (i = 0; i < linhas; i++)
     {
-        contador = 0;
-        for (j = 0; j < colunas; j++)
-        {
-            contador += matA[i][j];
-        }
+        contador = total_mes(linhas, colunas, matA, i);
         if (contador > maior_mes)
         {
             maior_mes = contador;
