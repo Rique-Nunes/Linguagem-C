@@ -6,27 +6,41 @@
 
 #include <stdio.h>
 
-int verificador(int tamanho, int matA[tamanho][tamanho]);
+int verificador_baixo(int tamanho, int matA[tamanho][tamanho]);
 
 void main()
 {
     int teste;
     int matA[3][3] = {
-        {1, 2, 3},
-        {4, 5, 6},
-        {7, 8, 9}
+        {1, 1, 5},
+        {1, 5, 9}, //{0}
+        {5, 9, 9} //{0;1}
+                  //{0;1;2}
     };
-    teste = verificador(3, matA);
-    printf("%d ola mundo", teste);
+    teste = verificador_baixo(3, matA);
+    printf("\n%d ola mundo", teste);
 }
 
-int verificador(int tamanho, int matA[tamanho][tamanho]){
-int i,j, y, soma_abaixo_diagonal = 0 ;
-    for (i = 1; i < tamanho; i++) {
-        for (j = 0; j < i; j++) {
-            soma_abaixo_diagonal += matA[i][j];
+int verificador_baixo(int tamanho, int matA[tamanho][tamanho]){
+int linha,j, soma_abaixo_diagonal = 0, soma_acima_diagonal = 0, soma_diagonal = 0 ;
+    for (linha = 1; linha < tamanho; linha++) {
+        for (j = 0; j < linha; j++) { 
+            soma_abaixo_diagonal += matA[linha][j];
         }
     }
-    return soma_abaixo_diagonal;
+    for (linha = 0; linha < tamanho - 1; linha++) {
+        for (j = linha + 1; j < tamanho; j++) { 
+            soma_acima_diagonal += matA[linha][j];
+        }
+    }
+    for (linha = 0; linha < tamanho; linha++) {
+        soma_diagonal += matA[linha][linha];
+            
+    }
+    printf("acima: %d, abaixo: %d, diagonal: %d", soma_acima_diagonal, soma_abaixo_diagonal, soma_diagonal);
+    if(soma_acima_diagonal == soma_diagonal && soma_abaixo_diagonal == soma_diagonal){
+        return 1;
+    }else{
+        return 0;
+    }
 }
-
