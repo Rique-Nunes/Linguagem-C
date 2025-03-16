@@ -1,5 +1,6 @@
 // a posicao do vetor do menor numero, dado a partir de uma posicao inicial dada pelo usuario
 // vet_a[7] = {8,6,3,7,1,9,4}
+//             0 1 2 3 4 5 6
 // o menor numero a partir da posicao 3 do vetor é a posicao 4 que tem valor 1.
 #include <stdio.h>
 
