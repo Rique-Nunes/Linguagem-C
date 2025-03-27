@@ -36,3 +36,44 @@ int qtd_carecter(char string[])
     }
     return cont;
 }
+
+/*
+#include <stdio.h>
+#include <string.h>
+
+int qtd_caracteres_sem_repeticao(char string[]) {
+    int i, j, tamanho = strlen(string), cont = 0;
+
+    for (i = 0; i < tamanho; i++) {
+        int repetido = 0;
+
+        for (j = 0; j < tamanho; j++) {
+            if (i != j && string[i] == string[j]) {
+                repetido = 1;
+                break;
+            }
+        }
+
+        if (!repetido) {
+            cont++;
+        }
+    }
+    return cont;
+}
+
+int main() {
+    char string1[] = "abracadabra";
+    char string2[] = "banana";
+    char string3[] = "a";
+    char string4[] = "";
+    char string5[] = "aabbc";
+
+    printf("'%s': %d caracteres sem repetição\n", string1, qtd_caracteres_sem_repeticao(string1)); // Saída: 5 (abrcd)
+    printf("'%s': %d caracteres sem repetição\n", string2, qtd_caracteres_sem_repeticao(string2)); // Saída: 3 (ban)
+    printf("'%s': %d caracteres sem repetição\n", string3, qtd_caracteres_sem_repeticao(string3)); // Saída: 1 (a)
+    printf("'%s': %d caracteres sem repetição\n", string4, qtd_caracteres_sem_repeticao(string4)); // Saída: 0
+    printf("'%s': %d caracteres sem repetição\n", string5, qtd_caracteres_sem_repeticao(string5)); // Saída: 3 (abc)
+
+    return 0;
+}
+*/
