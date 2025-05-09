@@ -25,8 +25,9 @@ void main()
 void trocando_vogal(char string[], int i, int tamanho)
 {
     if (i >= tamanho)
+    {
         return;
-    int teste = 0;
+    }
     if (string[i] != 'A' && string[i] != 'E' && string[i] != 'I' && string[i] != 'O' && string[i] != 'U')
     {
         for (int j = i + 1; j < tamanho; j++)
