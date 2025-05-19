@@ -42,6 +42,11 @@ void main()
     {
         printf("esta ordenado");
     }
+
+    for (int i=0; i < 5; i++)
+    {
+        printf("\n%s - %c - %d", pessoas[i].nome, pessoas[i].genero, pessoas[i].idade);
+    }
 }
 int ordenacao(Tdados lista[], int tamanho)
 {

@@ -37,18 +37,45 @@ typedef struct
 typedef struct
 {
     int codigo;
-    char nome[10];
+    char nome[30];
     int creditos;
 } Tdisciplina;
 
 #include "stdio.h"
 #include "string.h"
 
-void exibirhistorico(Taluno aluno[], Tdisciplina disciplinas[]);
+void exibirhistorico(Taluno aluno[], int tamanho, Tdisciplina disciplinas[], int tamanho_disc);
 void main()
 {
+    Taluno aluno[] = {
+        {101, 1, 2023, 8.5},
+        {102, 2, 2023, 7.0}};
+
+    Tdisciplina disciplinas[] = {
+        {101, "Matematica", 4},
+        {102, "Fisica", 3}};
+
+    exibirhistorico(aluno, 2, disciplinas, 2);
 }
-void exibirhistorico(Taluno aluno[], Tdisciplina disciplinas[])
+
+void exibirhistorico(Taluno aluno[], int tamanho, Tdisciplina disciplinas[], int tamanho_disc)
 {
-    
+    int codigos, j;
+    float mediana = 0, cont = 0;
+    for (int i = 0; i < tamanho; i++)
+    {
+        codigos = aluno[i].codigo;
+        for (j = 0; j < tamanho_disc; j++)
+        {
+            if (codigos == disciplinas[j].codigo)
+            {
+                break;
+            }
+        }
+        printf("%s (%d) %.2f\n", disciplinas[j].nome, codigos, aluno[i].media);
+
+        mediana += aluno[i].media * disciplinas[j].creditos;
+        cont += disciplinas[j].creditos;
+    }
+    printf("\n a media e: %.2f, %f", mediana / cont, cont);
 }
