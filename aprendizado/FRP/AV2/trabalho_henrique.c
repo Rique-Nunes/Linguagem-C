@@ -22,8 +22,37 @@ typedef struct
     int qtd_alunos;
 } Tcurso;
 
+int inicializar(int tamanho, Tcurso cursos[]);
 int inserir_curso(int tamanho, Tcurso cursos[]);
-void main() {}
+void main() {
+    Tcurso cursos[100];
+    int quantos;
+    quantos = inicializar(100, cursos);
+    printf("a quantidade de dados inicializados sao: %d", quantos);
+
+}
+
+
+int inicializar(int tamanho, Tcurso cursos[]){
+    FILE *arq;
+    int contador=0;
+    float codigo, qtd_alunos;
+    arq = fopen("dados.txt", "r");
+    
+    if(arq == NULL){
+        printf("erro ao abrir o arquivo");
+        return 0;
+    }
+    while(fscanf(arq,"%f %f %f %f %f %f %f %f %f %f", &codigo, &cursos[contador].enade, &cursos[contador].idd, &cursos[contador].doutores, &cursos[contador].mestres,
+         &cursos[contador].regime_trabalho, &cursos[contador].organizacao_pedagogica, &cursos[contador].infraestrutura, &cursos[contador].opaap, &qtd_alunos) != EOF){
+            cursos[contador].codigo = (int)codigo;
+            cursos[contador].qtd_alunos = (int)qtd_alunos;
+            contador++;
+    }
+    fclose(arq);
+    return contador;
+}
+
 
 int inserir_curso(int tamanho, Tcurso cursos[])
 {
@@ -37,5 +66,25 @@ int inserir_curso(int tamanho, Tcurso cursos[])
     printf("idd: ");
     scanf("%f", &cursos[tamanho].idd);
     
+    printf("doutores: ");
+    scanf("%f", &cursos[tamanho].doutores);
+
+    printf("mestres: ");
+    scanf("%f", &cursos[tamanho].mestres);
+
+    printf("regime_trabalho: ");
+    scanf("%f", &cursos[tamanho].regime_trabalho);
+
+    printf("organizacao_pedagogica: ");
+    scanf("%f", &cursos[tamanho].organizacao_pedagogica);
+
+    printf("infraestrutura: ");
+    scanf("%f", &cursos[tamanho].infraestrutura);
+
+    printf("opaap: ");
+    scanf("%f", &cursos[tamanho].opaap);
+
+    printf("qtd_alunos: ");
+    scanf("%d", &cursos[tamanho].qtd_alunos);
 
 }
