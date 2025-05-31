@@ -47,6 +47,8 @@ typedef struct
 int inicializar(int tamanho, Tcurso cursos[]);
 int inserir_curso(int tamanho, Tcurso cursos[]);
 void exibir_part1(int tamanho, Tcurso cursos[]);
+void printadora(int contador, int curso[]);
+
 void main()
 {
     Tcurso cursos[100];
@@ -120,8 +122,8 @@ void exibir_part1(int tamanho, Tcurso cursos[])
 {
     int i, j, CPC_faixa;
     float CPC;
-    int cursos_altos[tamanho];
-    int cursos_baixos[tamanho];
+    int curso_1[tamanho], curso_2[tamanho], curso_3[tamanho], curso_4[tamanho], curso_5[tamanho];
+    int cont_1 = 0, cont_2 = 0, cont_3 = 0, cont_4 = 0, cont_5 = 0;
 
     for (i = 0; i < tamanho; i++)
     {
@@ -129,38 +131,78 @@ void exibir_part1(int tamanho, Tcurso cursos[])
         if (CPC < 0.945)
         {
             CPC_faixa = 1;
+            curso_1[cont_1] = cursos[i].codigo;
+            cont_1++;
         }
-        else if (0.945 <= CPC < 1.945)
+        else if ((0.945 <= CPC) && (CPC < 1.945))
         {
             CPC_faixa = 2;
+            curso_2[cont_2] = cursos[i].codigo;
+            cont_2++;
         }
-        else if (1.945 <= CPC < 2.945)
+        else if ((1.945 <= CPC) && (CPC < 2.945))
         {
             CPC_faixa = 3;
+            curso_3[cont_3] = cursos[i].codigo;
+            cont_3++;
         }
-        else if (2.945 <= CPC < 3.945)
+        else if ((2.945 <= CPC) && (CPC < 3.945))
         {
             CPC_faixa = 4;
+            curso_4[cont_4] = cursos[i].codigo;
+            cont_4++;
         }
         else if (CPC >= 3.945)
         {
             CPC_faixa = 5;
+            curso_5[cont_5] = cursos[i].codigo;
+            cont_5++;
         }
 
-        printf("%d", cursos[i].codigo);
-        printf("%f", CPC);
-        printf("%f", CPC_faixa);
+        printf("%d\n", cursos[i].codigo);
+        printf("%f\n", CPC);
+        printf("%d\n", CPC_faixa);
         if (CPC_faixa < 3)
         {
-            printf("CPC está insatisfatorio");
-            cursos_baixos[j] = cursos[i].codigo;
+            printf("CPC está insatisfatorio\n");
         }
         else
         {
-            printf("CPC está satisfatorio");
-            cursos_altos[j] = cursos[i].codigo;
+            printf("CPC está satisfatorio\n");
         }
-        j++;
-        
+    }
+    printf("Exibindo os cursos de cada faixa\n");
+
+    printf("CPC's da faixa 1: ");
+    printadora(cont_1, curso_1);
+    printf("\n");
+
+    printf("CPC's da faixa 2: ");
+    printadora(cont_2, curso_2);
+    printf("\n");
+
+    printf("CPC's da faixa 3: ");
+    printadora(cont_3, curso_3);
+    printf("\n");
+
+    printf("CPC's da faixa 4: ");
+    printadora(cont_4, curso_4);
+    printf("\n");
+
+    printf("CPC's da faixa 5: ");
+    printadora(cont_5, curso_5);
+    printf("\n");
+}
+
+void printadora(int contador, int curso[])
+{
+    int j;
+    if (contador == 0)
+    {
+        return printf("0");
+    }
+    for (j = 0; j < contador; j++)
+    {
+        printf("%d,", curso[j]);
     }
 }
