@@ -48,7 +48,11 @@ int inicializar(int tamanho, Tcurso cursos[]);
 int inserir_curso(int tamanho, Tcurso cursos[]);
 void exibir_part1(int tamanho, Tcurso cursos[]);
 void printadora(int contador, int curso[]);
-
+//falta:
+/* função para colocar os dados do struc para o arquivo de texto(chamando quando o usuario quiser sair)
+preparar uma main com while para o usuario fazer varias coisas, um Do while talvez?
+não pensei.
+*/
 void main()
 {
     Tcurso cursos[100];
@@ -120,8 +124,8 @@ insatisfatório);
 */
 void exibir_part1(int tamanho, Tcurso cursos[])
 {
-    int i, j, CPC_faixa;
-    float CPC;
+    int i, j, CPC_faixa, IGC_faixa, soma_aluno = 0;
+    float CPC, IGC;
     int curso_1[tamanho], curso_2[tamanho], curso_3[tamanho], curso_4[tamanho], curso_5[tamanho];
     int cont_1 = 0, cont_2 = 0, cont_3 = 0, cont_4 = 0, cont_5 = 0;
 
@@ -158,6 +162,8 @@ void exibir_part1(int tamanho, Tcurso cursos[])
             curso_5[cont_5] = cursos[i].codigo;
             cont_5++;
         }
+        IGC = CPC * cursos[i].qtd_alunos;
+        soma_aluno += cursos[i].qtd_alunos;
 
         printf("%d\n", cursos[i].codigo);
         printf("%f\n", CPC);
@@ -170,6 +176,14 @@ void exibir_part1(int tamanho, Tcurso cursos[])
         {
             printf("CPC está satisfatorio\n");
         }
+        /*O IGC – Índice Geral de Cursos – da
+        instituição, contínuo e faixa (baseados na
+        mesma tabela de mapeamento apresentada
+        para o CPC), considerando que este é obtido a
+        partir de uma média ponderada de todos os
+        CPCs, onde o número de alunos matriculados
+        no curso representará o peso de seu CPC no
+        cálculo do IGC.*/
     }
     printf("Exibindo os cursos de cada faixa\n");
 
@@ -192,6 +206,42 @@ void exibir_part1(int tamanho, Tcurso cursos[])
     printf("CPC's da faixa 5: ");
     printadora(cont_5, curso_5);
     printf("\n");
+
+    /*O IGC – Índice Geral de Cursos – da
+    instituição, contínuo e faixa (baseados na
+    mesma tabela de mapeamento apresentada
+    para o CPC), considerando que este é obtido a
+    partir de uma média ponderada de todos os
+    CPCs, onde o número de alunos matriculados
+    no curso representará o peso de seu CPC no
+    cálculo do IGC.*/
+
+    // fazer função que testa entrando na tabela
+    IGC /= soma_aluno;
+
+    if (IGC < 0.945)
+    {
+        IGC_faixa = 1;
+    }
+    else if ((0.945 <= IGC) && (IGC < 1.945))
+    {
+        IGC_faixa = 2;
+    }
+    else if ((1.945 <= IGC) && (IGC < 2.945))
+    {
+        IGC_faixa = 3;
+    }
+    else if ((2.945 <= IGC) && (IGC < 3.945))
+    {
+        IGC_faixa = 4;
+    }
+    else if (IGC >= 3.945)
+    {
+        IGC_faixa = 5;
+    }
+
+    printf("o IGC dessa instituicao e: %f\n", IGC);
+    printf("o IGC-Faixa dessa instituicao e: %d\n", IGC_faixa);
 }
 
 void printadora(int contador, int curso[])
