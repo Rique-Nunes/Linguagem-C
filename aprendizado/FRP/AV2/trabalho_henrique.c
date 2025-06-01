@@ -28,7 +28,7 @@ no curso representará o peso de seu CPC no
 cálculo do IGC.
 */
 
-#include "stdio.h"
+#include <stdio.h>
 
 typedef struct
 {
@@ -44,215 +44,279 @@ typedef struct
     int qtd_alunos;
 } Tcurso;
 
-int inicializar(int tamanho, Tcurso cursos[]);
+int inicializar(Tcurso cursos[]);
 int inserir_curso(int tamanho, Tcurso cursos[]);
 void exibir_part1(int tamanho, Tcurso cursos[]);
+void salvar_arquivo(int tamanho, Tcurso cursos[]);
 void printadora(int contador, int curso[]);
-//falta:
-/* função para colocar os dados do struc para o arquivo de texto(chamando quando o usuario quiser sair)
-preparar uma main com while para o usuario fazer varias coisas, um Do while talvez?
-não pensei.
-*/
-void main()
+
+int main()
 {
     Tcurso cursos[100];
-    int quantos;
-    quantos = inicializar(100, cursos);
-    printf("a quantidade de dados inicializados sao: %d", quantos);
+    int tamanho = inicializar(cursos);
+    int opcao;
+
+    do
+    {
+        printf("\n--- MENU ---\n");
+        printf("1 - Inserir novo curso\n");
+        printf("2 - Processar dados (CPC/IGC)\n");
+        printf("3 - Sair e salvar\n");
+        printf("Escolha uma opcao: ");
+        scanf("%d", &opcao);
+
+        switch (opcao)
+        {
+        case 1:
+            if (tamanho < 100)
+                tamanho = inserir_curso(tamanho, cursos);
+            else
+                printf("Limite de cursos atingido.\n");
+            break;
+        case 2:
+            exibir_part1(tamanho, cursos);
+            break;
+        case 3:
+            salvar_arquivo(tamanho, cursos);
+            break;
+        default:
+            printf("Opcao invalida.\n");
+        }
+    } while (opcao != 3);
+
+    return 0;
 }
 
-int inicializar(int tamanho, Tcurso cursos[])
+int inicializar(Tcurso cursos[])
 {
-    FILE *arq;
+    FILE *arq = fopen("dados.txt", "r");
     int contador = 0;
     float codigo, qtd_alunos;
-    arq = fopen("dados.txt", "r");
 
     if (arq == NULL)
     {
-        printf("erro ao abrir o arquivo");
+        printf("Erro ao abrir o arquivo.\n");
         return 0;
     }
-    while (fscanf(arq, "%f %f %f %f %f %f %f %f %f %f", &codigo, &cursos[contador].enade, &cursos[contador].idd, &cursos[contador].doutores, &cursos[contador].mestres,
-                  &cursos[contador].regime_trabalho, &cursos[contador].organizacao_pedagogica, &cursos[contador].infraestrutura, &cursos[contador].opaap, &qtd_alunos) != EOF)
+
+    while (fscanf(arq, "%d %f %f %f %f %f %f %f %f %d", &cursos[contador].codigo, &cursos[contador].enade, &cursos[contador].idd,
+                  &cursos[contador].doutores, &cursos[contador].mestres, &cursos[contador].regime_trabalho,
+                  &cursos[contador].organizacao_pedagogica, &cursos[contador].infraestrutura,
+                  &cursos[contador].opaap, &cursos[contador].qtd_alunos) != EOF)
     {
-        cursos[contador].codigo = (int)codigo;
-        cursos[contador].qtd_alunos = (int)qtd_alunos;
         contador++;
     }
+
     fclose(arq);
     return contador;
 }
 
 int inserir_curso(int tamanho, Tcurso cursos[])
 {
-    printf("Iniciando processo para adicionar um novo curso: ");
-    printf("codigo: ");
+    printf("Inserir novo curso:\n");
+
+    printf("Codigo: ");
     scanf("%d", &cursos[tamanho].codigo);
 
-    printf("enade: ");
+    printf("ENADE: ");
     scanf("%f", &cursos[tamanho].enade);
 
-    printf("idd: ");
+    printf("IDD: ");
     scanf("%f", &cursos[tamanho].idd);
 
-    printf("doutores: ");
+    printf("Doutores: ");
     scanf("%f", &cursos[tamanho].doutores);
 
-    printf("mestres: ");
+    printf("Mestres: ");
     scanf("%f", &cursos[tamanho].mestres);
 
-    printf("regime_trabalho: ");
+    printf("Regime de trabalho: ");
     scanf("%f", &cursos[tamanho].regime_trabalho);
 
-    printf("organizacao_pedagogica: ");
+    printf("Organizacao pedagogica: ");
     scanf("%f", &cursos[tamanho].organizacao_pedagogica);
 
-    printf("infraestrutura: ");
+    printf("Infraestrutura: ");
     scanf("%f", &cursos[tamanho].infraestrutura);
 
-    printf("opaap: ");
+    printf("OPAAP: ");
     scanf("%f", &cursos[tamanho].opaap);
 
-    printf("qtd_alunos: ");
+    printf("Quantidade de alunos: ");
     scanf("%d", &cursos[tamanho].qtd_alunos);
+
+    return tamanho + 1;
 }
-/*
-1) Para cada curso: código, CPC contínuo, CPC
-faixa e a classificação deste (satisfatório ou
-insatisfatório);
-*/
+
 void exibir_part1(int tamanho, Tcurso cursos[])
 {
-    int i, j, CPC_faixa, IGC_faixa, soma_aluno = 0;
-    float CPC, IGC;
-    int curso_1[tamanho], curso_2[tamanho], curso_3[tamanho], curso_4[tamanho], curso_5[tamanho];
+    int i, CPC_faixa, IGC_faixa, soma_aluno = 0;
+    float CPC, IGC = 0;
+    int curso_1[100], curso_2[100], curso_3[100], curso_4[100], curso_5[100];
     int cont_1 = 0, cont_2 = 0, cont_3 = 0, cont_4 = 0, cont_5 = 0;
 
     for (i = 0; i < tamanho; i++)
     {
-        CPC = cursos[i].enade * 0.2 + cursos[i].idd * 0.35 + cursos[i].doutores * 0.15 + cursos[i].mestres * 0.075 + cursos[i].regime_trabalho * 0.075 + cursos[i].organizacao_pedagogica * 0.075 + cursos[i].infraestrutura * 0.05 + cursos[i].opaap * 0.025;
+        CPC = cursos[i].enade * 0.2 + cursos[i].idd * 0.35 + cursos[i].doutores * 0.15 +
+              cursos[i].mestres * 0.075 + cursos[i].regime_trabalho * 0.075 +
+              cursos[i].organizacao_pedagogica * 0.075 + cursos[i].infraestrutura * 0.05 +
+              cursos[i].opaap * 0.025;
+
         if (CPC < 0.945)
         {
             CPC_faixa = 1;
-            curso_1[cont_1] = cursos[i].codigo;
-            cont_1++;
+            curso_1[cont_1++] = cursos[i].codigo;
         }
-        else if ((0.945 <= CPC) && (CPC < 1.945))
+        else if (CPC < 1.945)
         {
             CPC_faixa = 2;
-            curso_2[cont_2] = cursos[i].codigo;
-            cont_2++;
+            curso_2[cont_2++] = cursos[i].codigo;
         }
-        else if ((1.945 <= CPC) && (CPC < 2.945))
+        else if (CPC < 2.945)
         {
             CPC_faixa = 3;
-            curso_3[cont_3] = cursos[i].codigo;
-            cont_3++;
+            curso_3[cont_3++] = cursos[i].codigo;
         }
-        else if ((2.945 <= CPC) && (CPC < 3.945))
+        else if (CPC < 3.945)
         {
             CPC_faixa = 4;
-            curso_4[cont_4] = cursos[i].codigo;
-            cont_4++;
-        }
-        else if (CPC >= 3.945)
-        {
-            CPC_faixa = 5;
-            curso_5[cont_5] = cursos[i].codigo;
-            cont_5++;
-        }
-        IGC = CPC * cursos[i].qtd_alunos;
-        soma_aluno += cursos[i].qtd_alunos;
-
-        printf("%d\n", cursos[i].codigo);
-        printf("%f\n", CPC);
-        printf("%d\n", CPC_faixa);
-        if (CPC_faixa < 3)
-        {
-            printf("CPC está insatisfatorio\n");
+            curso_4[cont_4++] = cursos[i].codigo;
         }
         else
         {
-            printf("CPC está satisfatorio\n");
+            CPC_faixa = 5;
+            curso_5[cont_5++] = cursos[i].codigo;
         }
-        /*O IGC – Índice Geral de Cursos – da
-        instituição, contínuo e faixa (baseados na
-        mesma tabela de mapeamento apresentada
-        para o CPC), considerando que este é obtido a
-        partir de uma média ponderada de todos os
-        CPCs, onde o número de alunos matriculados
-        no curso representará o peso de seu CPC no
-        cálculo do IGC.*/
-    }
-    printf("Exibindo os cursos de cada faixa\n");
 
-    printf("CPC's da faixa 1: ");
+        IGC += CPC * cursos[i].qtd_alunos;
+        soma_aluno += cursos[i].qtd_alunos;
+
+        printf("\nCurso: %d\n", cursos[i].codigo);
+        printf("CPC continuo: %.2f\n", CPC);
+        printf("CPC faixa: %d\n", CPC_faixa);
+        printf("Classificacao: %s\n", CPC_faixa < 3 ? "Insatisfatorio" : "Satisfatorio");
+        printf("<------------------------->");
+    }
+
+    printf("\nCursos por faixa:\n");
+    printf("Faixa 1: ");
     printadora(cont_1, curso_1);
     printf("\n");
-
-    printf("CPC's da faixa 2: ");
+    printf("Faixa 2: ");
     printadora(cont_2, curso_2);
     printf("\n");
-
-    printf("CPC's da faixa 3: ");
+    printf("Faixa 3: ");
     printadora(cont_3, curso_3);
     printf("\n");
-
-    printf("CPC's da faixa 4: ");
+    printf("Faixa 4: ");
     printadora(cont_4, curso_4);
     printf("\n");
-
-    printf("CPC's da faixa 5: ");
+    printf("Faixa 5: ");
     printadora(cont_5, curso_5);
     printf("\n");
+    printf("<------------------------->");
 
-    /*O IGC – Índice Geral de Cursos – da
-    instituição, contínuo e faixa (baseados na
-    mesma tabela de mapeamento apresentada
-    para o CPC), considerando que este é obtido a
-    partir de uma média ponderada de todos os
-    CPCs, onde o número de alunos matriculados
-    no curso representará o peso de seu CPC no
-    cálculo do IGC.*/
-
-    // fazer função que testa entrando na tabela
-    IGC /= soma_aluno;
+    if (soma_aluno > 0)
+        IGC /= soma_aluno;
+    else
+        IGC = 0;
 
     if (IGC < 0.945)
-    {
         IGC_faixa = 1;
-    }
-    else if ((0.945 <= IGC) && (IGC < 1.945))
-    {
+    else if (IGC < 1.945)
         IGC_faixa = 2;
-    }
-    else if ((1.945 <= IGC) && (IGC < 2.945))
-    {
+    else if (IGC < 2.945)
         IGC_faixa = 3;
-    }
-    else if ((2.945 <= IGC) && (IGC < 3.945))
-    {
+    else if (IGC < 3.945)
         IGC_faixa = 4;
-    }
-    else if (IGC >= 3.945)
-    {
+    else
         IGC_faixa = 5;
-    }
 
-    printf("o IGC dessa instituicao e: %f\n", IGC);
-    printf("o IGC-Faixa dessa instituicao e: %d\n", IGC_faixa);
+    printf("\nIGC continuo da instituicao: %.2f\n", IGC);
+    printf("IGC faixa da instituicao: %d\n", IGC_faixa);
+    printf("Classificacao Geral: %s\n", IGC_faixa < 3 ? "Insatisfatorio" : "Satisfatorio");
 }
+/* Expectativa de separar o calculo de CPC para essa função
+void calcula_CPC(int tamanho, Tcurso cursos[], float *IGC, int *soma_aluno, int *cont_1, int *cont_2, cont_3 = 0, cont_4 = 0, cont_5 = 0;)
+{
+    int i, CPC_faixa;
+    float CPC;
+    for (i = 0; i < tamanho; i++)
+    {
+        CPC = cursos[i].enade * 0.2 + cursos[i].idd * 0.35 + cursos[i].doutores * 0.15 +
+              cursos[i].mestres * 0.075 + cursos[i].regime_trabalho * 0.075 +
+              cursos[i].organizacao_pedagogica * 0.075 + cursos[i].infraestrutura * 0.05 +
+              cursos[i].opaap * 0.025;
 
+        if (CPC < 0.945)
+        {
+            CPC_faixa = 1;
+            curso_1[cont_1++] = cursos[i].codigo;
+        }
+        else if (CPC < 1.945)
+        {
+            CPC_faixa = 2;
+            curso_2[cont_2++] = cursos[i].codigo;
+        }
+        else if (CPC < 2.945)
+        {
+            CPC_faixa = 3;
+            curso_3[cont_3++] = cursos[i].codigo;
+        }
+        else if (CPC < 3.945)
+        {
+            CPC_faixa = 4;
+            curso_4[cont_4++] = cursos[i].codigo;
+        }
+        else
+        {
+            CPC_faixa = 5;
+            curso_5[cont_5++] = cursos[i].codigo;
+        }
+
+        IGC += CPC * cursos[i].qtd_alunos;
+        soma_aluno += cursos[i].qtd_alunos;
+
+        printf("\nCurso: %d\n", cursos[i].codigo);
+        printf("CPC continuo: %.2f\n", CPC);
+        printf("CPC faixa: %d\n", CPC_faixa);
+        printf("Classificacao: %s\n", CPC_faixa < 3 ? "Insatisfatorio" : "Satisfatorio");
+    }
+}
+*/
 void printadora(int contador, int curso[])
 {
-    int j;
     if (contador == 0)
     {
-        return printf("0");
+        printf("Nenhum");
+        return;
     }
-    for (j = 0; j < contador; j++)
+
+    for (int j = 0; j < contador; j++)
     {
-        printf("%d,", curso[j]);
+        printf("%d", curso[j]);
+        if (j < contador - 1)
+            printf(", ");
     }
+}
+
+void salvar_arquivo(int tamanho, Tcurso cursos[])
+{
+    FILE *arq = fopen("dados.txt", "w");
+    if (arq == NULL)
+    {
+        printf("Erro ao abrir o arquivo para escrita.\n");
+        return;
+    }
+
+    for (int i = 0; i < tamanho; i++)
+    {
+        fprintf(arq, "%d %.2f %.2f %.2f %.2f %.2f %.2f %.2f %.2f %d\n",
+                cursos[i].codigo, cursos[i].enade, cursos[i].idd, cursos[i].doutores,
+                cursos[i].mestres, cursos[i].regime_trabalho, cursos[i].organizacao_pedagogica,
+                cursos[i].infraestrutura, cursos[i].opaap, cursos[i].qtd_alunos);
+    }
+
+    fclose(arq);
+    printf("Dados salvos com sucesso no arquivo.\n");
 }
