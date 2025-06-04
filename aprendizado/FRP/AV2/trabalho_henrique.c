@@ -1,31 +1,7 @@
-/*Trabalho AV2*/
-/*os dados tem que ficar no arquivo e para manipular eles tem que abrir o arquivo e alocar em um vetor
-quando sair tem que salvar os dados no arquivo de texto o IGC usa a mesma tabela do CPC continuo*/
-/*o CPC é uma média ponderada porém quando se soma todos os pesos vai dar 1, por ser em porcentagem*/
+/*Trabalho AV2 de 2FPR - Leonardo Vianna
+Henrique da Costa Nunes e Pablo Camilo de Oliveira Torres
 
-/*while na main para ficar reptidindo até o usuário querer sair*/
-/*cadastrar novos, não altera ou remove*/
-/*
-Todos os dados do arquivo devem ser lidos para
-um vetor de structs, cada posição com os insumos
-de um curso da instituição.
-O programa deve permitir que o usuário opte pela
-inclusão de novo(s) curso(s) no vetor ou processar
-os seus dados. Neste último caso, deve exibir as
-seguintes informações:
-1) Para cada curso: código, CPC contínuo, CPC
-faixa e a classificação deste (satisfatório ou
-insatisfatório);
-2) Para cada CPC faixa possível, exibir os cursos
-que o obteve;
-3) O IGC – Índice Geral de Cursos – da
-instituição, contínuo e faixa (baseados na
-mesma tabela de mapeamento apresentada
-para o CPC), considerando que este é obtido a
-partir de uma média ponderada de todos os
-CPCs, onde o número de alunos matriculados
-no curso representará o peso de seu CPC no
-cálculo do IGC.
+obs: deixo um arquivo de dados.txt para teste de código, porém ele gera um txt novo caso não exista
 */
 
 #include <stdio.h>
@@ -46,7 +22,7 @@ typedef struct
 
 int inicializar(Tcurso cursos[]);
 int inserir_curso(int tamanho, Tcurso cursos[]);
-void exibir_part1(int tamanho, Tcurso cursos[]);
+void exibir(int tamanho, Tcurso cursos[]);
 void salvar_arquivo(int tamanho, Tcurso cursos[]);
 void printadora(int contador, int curso[]);
 int calculador_tabela(float IGC);
@@ -76,7 +52,7 @@ int main()
                 printf("Limite de cursos atingido.\n");
             break;
         case 2:
-            exibir_part1(tamanho, cursos);
+            exibir(tamanho, cursos);
             break;
         case 3:
             salvar_arquivo(tamanho, cursos);
@@ -97,7 +73,7 @@ int inicializar(Tcurso cursos[])
 
     if (arq == NULL)
     {
-        printf("Arquivo não encontrado. Inicializando um novo...\n");
+        printf("Arquivo nao encontrado. Inicializando um novo...\n");
         return 0;
     }
 
@@ -150,7 +126,7 @@ int inserir_curso(int tamanho, Tcurso cursos[])
     return tamanho + 1;
 }
 
-void exibir_part1(int tamanho, Tcurso cursos[])
+void exibir(int tamanho, Tcurso cursos[])
 {
     int i, CPC_faixa, IGC_faixa, soma_aluno = 0;
     float CPC, IGC = 0;
