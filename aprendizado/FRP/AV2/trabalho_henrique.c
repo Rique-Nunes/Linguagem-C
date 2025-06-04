@@ -49,6 +49,8 @@ int inserir_curso(int tamanho, Tcurso cursos[]);
 void exibir_part1(int tamanho, Tcurso cursos[]);
 void salvar_arquivo(int tamanho, Tcurso cursos[]);
 void printadora(int contador, int curso[]);
+int calculador_tabela(float IGC);
+void calcula_CPC(int tamanho, Tcurso cursos[], float *IGC, int *soma_aluno, int *cont_1, int *cont_2, int *cont_3,int *cont_4, int*cont_5,  int curso_1[],int curso_2[],int curso_3[],int curso_4[],int curso_5[]);
 
 int main()
 {
@@ -95,11 +97,11 @@ int inicializar(Tcurso cursos[])
 
     if (arq == NULL)
     {
-        printf("Erro ao abrir o arquivo.\n");
+        printf("Arquivo não encontrado. Inicializando um novo...\n");
         return 0;
     }
 
-    while (fscanf(arq, "%d %f %f %f %f %f %f %f %f %d", &cursos[contador].codigo, &cursos[contador].enade, &cursos[contador].idd,
+    while (fscanf(arq, "%d|%f|%f|%f|%f|%f|%f|%f|%f|%d", &cursos[contador].codigo, &cursos[contador].enade, &cursos[contador].idd,
                   &cursos[contador].doutores, &cursos[contador].mestres, &cursos[contador].regime_trabalho,
                   &cursos[contador].organizacao_pedagogica, &cursos[contador].infraestrutura,
                   &cursos[contador].opaap, &cursos[contador].qtd_alunos) != EOF)
@@ -155,48 +157,7 @@ void exibir_part1(int tamanho, Tcurso cursos[])
     int curso_1[100], curso_2[100], curso_3[100], curso_4[100], curso_5[100];
     int cont_1 = 0, cont_2 = 0, cont_3 = 0, cont_4 = 0, cont_5 = 0;
 
-    for (i = 0; i < tamanho; i++)
-    {
-        CPC = cursos[i].enade * 0.2 + cursos[i].idd * 0.35 + cursos[i].doutores * 0.15 +
-              cursos[i].mestres * 0.075 + cursos[i].regime_trabalho * 0.075 +
-              cursos[i].organizacao_pedagogica * 0.075 + cursos[i].infraestrutura * 0.05 +
-              cursos[i].opaap * 0.025;
-
-        if (CPC < 0.945)
-        {
-            CPC_faixa = 1;
-            curso_1[cont_1++] = cursos[i].codigo;
-        }
-        else if (CPC < 1.945)
-        {
-            CPC_faixa = 2;
-            curso_2[cont_2++] = cursos[i].codigo;
-        }
-        else if (CPC < 2.945)
-        {
-            CPC_faixa = 3;
-            curso_3[cont_3++] = cursos[i].codigo;
-        }
-        else if (CPC < 3.945)
-        {
-            CPC_faixa = 4;
-            curso_4[cont_4++] = cursos[i].codigo;
-        }
-        else
-        {
-            CPC_faixa = 5;
-            curso_5[cont_5++] = cursos[i].codigo;
-        }
-
-        IGC += CPC * cursos[i].qtd_alunos;
-        soma_aluno += cursos[i].qtd_alunos;
-
-        printf("\nCurso: %d\n", cursos[i].codigo);
-        printf("CPC continuo: %.2f\n", CPC);
-        printf("CPC faixa: %d\n", CPC_faixa);
-        printf("Classificacao: %s\n", CPC_faixa < 3 ? "Insatisfatorio" : "Satisfatorio");
-        printf("<------------------------->");
-    }
+    calcula_CPC(tamanho, cursos, &IGC,  &soma_aluno,  &cont_1, &cont_2, &cont_3, &cont_4, &cont_5, curso_1, curso_2, curso_3, curso_4, curso_5);
 
     printf("\nCursos por faixa:\n");
     printf("Faixa 1: ");
@@ -221,69 +182,83 @@ void exibir_part1(int tamanho, Tcurso cursos[])
     else
         IGC = 0;
 
-    if (IGC < 0.945)
-        IGC_faixa = 1;
-    else if (IGC < 1.945)
-        IGC_faixa = 2;
-    else if (IGC < 2.945)
-        IGC_faixa = 3;
-    else if (IGC < 3.945)
-        IGC_faixa = 4;
-    else
-        IGC_faixa = 5;
+    IGC_faixa = calculador_tabela(IGC);
 
     printf("\nIGC continuo da instituicao: %.2f\n", IGC);
     printf("IGC faixa da instituicao: %d\n", IGC_faixa);
     printf("Classificacao Geral: %s\n", IGC_faixa < 3 ? "Insatisfatorio" : "Satisfatorio");
 }
-/* Expectativa de separar o calculo de CPC para essa função
-void calcula_CPC(int tamanho, Tcurso cursos[], float *IGC, int *soma_aluno, int *cont_1, int *cont_2, cont_3 = 0, cont_4 = 0, cont_5 = 0;)
+/* Expectativa de separar o calculo de CPC para essa função */
+void calcula_CPC(int tamanho, Tcurso cursos[], float *IGC, int *soma_aluno, int *cont_1, int *cont_2, int *cont_3,int *cont_4, int*cont_5,  int curso_1[],int curso_2[],int curso_3[],int curso_4[],int curso_5[])
 {
-    int i, CPC_faixa;
-    float CPC;
+    int i, CPC_faixa_calculada;
+    float CPC_calculado;
+
     for (i = 0; i < tamanho; i++)
     {
-        CPC = cursos[i].enade * 0.2 + cursos[i].idd * 0.35 + cursos[i].doutores * 0.15 +
-              cursos[i].mestres * 0.075 + cursos[i].regime_trabalho * 0.075 +
-              cursos[i].organizacao_pedagogica * 0.075 + cursos[i].infraestrutura * 0.05 +
-              cursos[i].opaap * 0.025;
+        CPC_calculado = cursos[i].enade * 0.2 + cursos[i].idd * 0.35 + cursos[i].doutores * 0.15 +
+                      cursos[i].mestres * 0.075 + cursos[i].regime_trabalho * 0.075 +
+                      cursos[i].organizacao_pedagogica * 0.075 + cursos[i].infraestrutura * 0.05 +
+                      cursos[i].opaap * 0.025;
 
-        if (CPC < 0.945)
+        CPC_faixa_calculada = calculador_tabela(CPC_calculado);
+
+        if (CPC_faixa_calculada == 1)
         {
-            CPC_faixa = 1;
-            curso_1[cont_1++] = cursos[i].codigo;
+            curso_1[*cont_1] = cursos[i].codigo;
+            (*cont_1)++;
         }
-        else if (CPC < 1.945)
+        else if (CPC_faixa_calculada == 2)
         {
-            CPC_faixa = 2;
-            curso_2[cont_2++] = cursos[i].codigo;
+            curso_2[*cont_2] = cursos[i].codigo;
+            (*cont_2)++;
         }
-        else if (CPC < 2.945)
+        else if (CPC_faixa_calculada == 3)
         {
-            CPC_faixa = 3;
-            curso_3[cont_3++] = cursos[i].codigo;
+            curso_3[*cont_3] = cursos[i].codigo;
+            (*cont_3)++;
         }
-        else if (CPC < 3.945)
+        else if (CPC_faixa_calculada == 4)
         {
-            CPC_faixa = 4;
-            curso_4[cont_4++] = cursos[i].codigo;
+            curso_4[*cont_4] = cursos[i].codigo;
+            (*cont_4)++;
         }
-        else
+        else if (CPC_faixa_calculada == 5)
         {
-            CPC_faixa = 5;
-            curso_5[cont_5++] = cursos[i].codigo;
+            curso_5[*cont_5] = cursos[i].codigo;
+            (*cont_5)++;
         }
 
-        IGC += CPC * cursos[i].qtd_alunos;
-        soma_aluno += cursos[i].qtd_alunos;
+        *IGC += CPC_calculado * cursos[i].qtd_alunos;
+        *soma_aluno += cursos[i].qtd_alunos;
 
         printf("\nCurso: %d\n", cursos[i].codigo);
-        printf("CPC continuo: %.2f\n", CPC);
-        printf("CPC faixa: %d\n", CPC_faixa);
-        printf("Classificacao: %s\n", CPC_faixa < 3 ? "Insatisfatorio" : "Satisfatorio");
+        printf("CPC continuo: %.2f\n", CPC_calculado);
+        printf("CPC faixa: %d\n", CPC_faixa_calculada);
+        printf("Classificacao: %s\n", CPC_faixa_calculada < 3 ? "Insatisfatorio" : "Satisfatorio");
     }
 }
-*/
+int calculador_tabela(float valor){
+int valor_faixa;
+
+    if (valor < 0.945){
+        valor_faixa = 1;
+    }
+    else if (valor < 1.945){
+        valor_faixa = 2;
+    }
+    else if (valor < 2.945){
+        valor_faixa = 3;
+    }
+    else if (valor < 3.945){
+        valor_faixa = 4;
+    }
+    else{
+        valor_faixa = 5;
+    }
+    return valor_faixa;
+}
+
 void printadora(int contador, int curso[])
 {
     if (contador == 0)
@@ -311,7 +286,7 @@ void salvar_arquivo(int tamanho, Tcurso cursos[])
 
     for (int i = 0; i < tamanho; i++)
     {
-        fprintf(arq, "%d %.2f %.2f %.2f %.2f %.2f %.2f %.2f %.2f %d\n",
+        fprintf(arq, "%d|%.2f|%.2f|%.2f|%.2f|%.2f|%.2f|%.2f|%.2f|%d\n",
                 cursos[i].codigo, cursos[i].enade, cursos[i].idd, cursos[i].doutores,
                 cursos[i].mestres, cursos[i].regime_trabalho, cursos[i].organizacao_pedagogica,
                 cursos[i].infraestrutura, cursos[i].opaap, cursos[i].qtd_alunos);
