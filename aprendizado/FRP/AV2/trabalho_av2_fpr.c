@@ -164,7 +164,7 @@ void exibir(int tamanho, Tcurso cursos[])
     printf("IGC faixa da instituicao: %d\n", IGC_faixa);
     printf("Classificacao Geral: %s\n", IGC_faixa < 3 ? "Insatisfatorio" : "Satisfatorio");
 }
-/* Expectativa de separar o calculo de CPC para essa função */
+
 void calcula_CPC(int tamanho, Tcurso cursos[], float *IGC, int *soma_aluno, int *cont_1, int *cont_2, int *cont_3,int *cont_4, int*cont_5,  int curso_1[],int curso_2[],int curso_3[],int curso_4[],int curso_5[])
 {
     int i, CPC_faixa_calculada;
