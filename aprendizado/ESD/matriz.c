@@ -25,13 +25,24 @@ void main()
     // int *matriz = malloc(lin * col * sizeof(int));
 
     // 2° método uma alocação de em um vetor de vetores
-    int **matriz = malloc(lin * sizeof(int *));
-    for (int k = 0; k < lin; k++)
-    {
+    //int **matriz = malloc(lin * sizeof(int *));
+    //for (int k = 0; k < lin; k++)
+    /*{
         matriz[k] = malloc(col * sizeof(int));
     }
-    preencheraleatorio_v2(3, 4, matriz);
 
+    preencheraleatorio_v2(3, 4, matriz);
+    */
+   //método 3 uma alocação de vetores em matriz[0]
+
+   int **matriz = malloc( lin * sizeof(int*));
+   matriz[0] = malloc(lin * col *sizeof(int));
+   
+   for(int i=1; i<lin; i++){
+    matriz[i]=matriz[0]+i*col;
+   }
+    //o v2 serve para o v3 pois ambos são acessados por matriz[i][j], sendo a matriz **
+    preencheraleatorio_v2(3, 4, matriz);
     for (int i = 0; i < 3; i++)
     {
         printf("\n");
@@ -40,18 +51,21 @@ void main()
             printf("%d,", matriz[i][j]);
         }
     }
-    printf("\n");
-    mostrarqtdcolunas_v2(lin, col, matriz);
-    printf("\n");
-    mostrarqtdlinhas_v2(lin, col, matriz);
-    printf("\n");
+    free(matriz[0]);
+    free(matriz);
+    //printf("\n");
+    //mostrarqtdcolunas_v2(lin, col, matriz);
+    //printf("\n");
+    //mostrarqtdlinhas_v2(lin, col, matriz);
+    //printf("\n");
 
-
+    /*
     for (int k = 0; k < lin; k++)
     {
         free(matriz[k]);
     }
-    free(matriz);
+    */
+    //free(matriz);
     // preencheraleatorio_v1(lin, col, matriz);
     /*
     for (int i = 0; i < 3; i++)
