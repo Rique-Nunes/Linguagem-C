@@ -22,29 +22,12 @@ void main()
     // int matriz[3][4];
     int lin = 3, col = 4;
 
-
     // 1° método uma alocação linear onde só tem um ponteiro bem grande
 
     // int *matriz = malloc(lin * col * sizeof(int));
     // preencheraleatorio_v1(lin, col, matriz);
-    // free(matriz); //para v1
-
-
-    
-    // 2° método uma alocação de em um vetor de vetores
     /*
-    //criar
-    
-    int **matriz = malloc(lin * sizeof(int *));
-    for (int k = 0; k < lin; k++)
-    {
-        matriz[k] = malloc(col * sizeof(int));
-    }
-
-    //preencher
-    preencheraleatorio_v2(3, 4, matriz);
-
-        for (int i = 0; i < 3; i++)
+    for (int i = 0; i < 3; i++)
     {
         printf("\n");
         for (int j = 0; j < 4; j++)
@@ -54,13 +37,40 @@ void main()
     }
     printf("\n");
 
+    // free(matriz);
+
+
+
+
+    // 2° método uma alocação de em um vetor de vetores
+    /*
+
+    int **matriz = malloc(lin * sizeof(int *));
+
+    for (int k = 0; k < lin; k++)
+    {
+        matriz[k] = malloc(col * sizeof(int));
+    }
+
+    
+    preencheraleatorio_v2(3, 4, matriz);
+
+    for (int i = 0; i < 3; i++)
+    {
+        printf("\n");
+        for (int j = 0; j < 4; j++)
+        {
+            printf("%d,", matriz[i][j]);
+        }
+    }
+
 
     printf("\n");
     mostrarqtdcolunas_v2(lin, col, matriz);
     printf("\n");
     mostrarqtdlinhas_v2(lin, col, matriz);
     printf("\n");
-    
+
     // Liberar a memória alocada
     for (int k = 0; k < lin; k++)
     {
@@ -70,6 +80,7 @@ void main()
     free(matriz);
 
     */
+
     // método 3 uma alocação de vetores em matriz[0]
 
     int **matriz = malloc(lin * sizeof(int *));
@@ -91,20 +102,6 @@ void main()
     }
     free(matriz[0]);
     free(matriz);
-
-
-
-    /*
-    for (int i = 0; i < 3; i++)
-    {
-        printf("\n");
-        for (int j = 0; j < 4; j++)
-        {
-            printf("%d,", matriz[(i * col) + j]);
-        }
-    }
-    printf("\n");
-    */
 
     //  mostrarqtdlinhas(3, 4, matriz);
     //  printf("\n");
