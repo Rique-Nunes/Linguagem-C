@@ -70,47 +70,22 @@ int main()
         indices_ranking[i] = &vetor[i];
     }
 
-    // comparar pelo nome - ainda não testado
-    /*
-    for (int i = 0; i < n - 1; i++)
+    // Ordenar por nome
+    int trocou = 1;
+    while (trocou == 1)
     {
-        if (strcmp(indices_nome[i + 1]->nome, indices_nome[i]->nome) == -1)
+        trocou = 0;
+        for (int i = 0; i < n - 1; i++)
         {
-            vAtletas *temp = indices_nome[i + 1];
-            indices_nome[i + 1] = indices_nome[i];
-            indices_nome[i] = temp;
-        }
-        else if (strcmp(indices_nome[i + 1]->nome, indices_nome[i]->nome) == 0)
-        {
-            if (indices_nome[i + 1]->matricula > indices_nome[i]->matricula)
+            if (strcmp(indices_nome[i]->nome, indices_nome[i + 1]->nome) > 0)
             {
-
-                vAtletas *temp = indices_nome[i + 1];
-                indices_nome[i + 1] = indices_nome[i];
-                indices_nome[i] = temp;
+                vAtletas *temp = indices_nome[i];
+                indices_nome[i] = indices_nome[i + 1];
+                indices_nome[i + 1] = temp;
+                trocou = 1;
             }
         }
     }
-    */
-    /*
-        for (i = 0; i < tamanho - 1; i++)
-        {
-            min = i;
-            for (j = i + 1; j < tamanho; j++)
-            {
-                if (valores[j] < valores[min])
-                {
-                    min = j;
-                    aux = valores[i];
-                    valores[i] = valores[min];
-                    valores[min] = aux;
-                }
-            }
-
-        }
-
-
-         */
 
     // Ordenar por ranking
     for (int i = 0; i < n - 1; i++)
@@ -119,13 +94,16 @@ int main()
 
         for (int j = i + 1; j < n; j++)
         {
-            if (indices_ranking[j]->matricula < indices_ranking[min]->matricula)
+            if (indices_ranking[j]->tempo < indices_ranking[min]->tempo)
             {
                 min = j;
             }
-            vAtletas *temp = indices_ranking[i];
-            indices_ranking[i] = indices_ranking[min];
-            indices_ranking[min] = temp;
+            if (min != i)
+            {
+                vAtletas *temp = indices_ranking[i];
+                indices_ranking[i] = indices_ranking[min];
+                indices_ranking[min] = temp;
+            }
         }
     }
 
@@ -139,6 +117,30 @@ int main()
     for (int i = 0; i < n; i++)
     {
         printf("Nome: %s, Matricula: %d, tempo:  %d\n", indices_ranking[i]->nome, indices_ranking[i]->matricula, indices_ranking[i]->tempo);
+    }
+
+    printf("\n--- Ordem Nome ---\n");
+    for (int i = 0; i < n; i++)
+    {
+        printf("Nome: %s, Matricula: %d, tempo:  %d\n", indices_nome[i]->nome, indices_nome[i]->matricula, indices_nome[i]->tempo);
+    }
+
+    /*
+    Filtrar atletas com tempo superior a um limite:
+     O usuário informa um tempo limite em minutos.
+    */
+    int tempo_limite;
+    printf("\nDigite o tempo limite em minutos: ");
+    scanf("%d", &tempo_limite);
+
+    printf("\n--- Atletas com tempo superior a %d minutos ---\n", tempo_limite);
+
+    for (int j = 0; j < n; j++)
+    {
+        if (indices_ranking[j]->tempo < tempo_limite)
+        {
+            printf("Nome: %s, Matricula: %d, tempo:  %d\n", indices_ranking[j]->nome, indices_ranking[j]->matricula, indices_ranking[j]->tempo);
+        }
     }
 
     for (int i = 0; i < n; i++)
