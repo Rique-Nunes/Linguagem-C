@@ -13,21 +13,9 @@ typedef struct atleta vAtletas;
 
 int main()
 {
-    int n;
-    printf("Bem-vindo quantos usuarios ira cadastrar");
-    scanf("%d", &n);
+    int resposta=0, n;
+do{
 
-    vAtletas *vetor = (vAtletas *)malloc(n * sizeof(vAtletas)); // Para os dados
-    if (!vetor)
-    {
-        return 0;
-    }
-    vAtletas **indices = (vAtletas **)malloc(n * sizeof(vAtletas *)); // para os ponteiros
-    if (!indices)
-    {
-        free(vetor);
-        return 0;
-    }
     vAtletas **indices_nome = (vAtletas **)malloc(n * sizeof(vAtletas *)); // para os ponteiros ordenados por nome
     if (!indices_nome)
     {
@@ -41,27 +29,6 @@ int main()
         return 0;
     }
 
-    for (int i = 0; i < n; i++)
-    {
-        char nome_buffer[100];
-        printf("\n--- Atleta %d ---\n", i + 1);
-        printf("Digite o nome: ");
-        scanf("%s", nome_buffer);
-
-        vetor[i].nome = (char *)malloc((strlen(nome_buffer) + 1) * sizeof(char));
-        if (!vetor[i].nome)
-        {
-            return 1;
-        }
-
-        strcpy(vetor[i].nome, nome_buffer);
-
-        printf("Digite a matricula: ");
-        scanf("%d", &vetor[i].matricula);
-
-        printf("Digite o tempo: ");
-        scanf("%d", &vetor[i].tempo);
-    }
 
     for (int i = 0; i < n; i++)
     {
@@ -106,26 +73,38 @@ int main()
             }
         }
     }
+    printf("Bem-vindo ao sistemas");
+    scanf("%d", &resposta);
 
-    printf("\n--- Ordem Original ---\n");
-    for (int i = 0; i < n; i++)
+    switch (resposta)
     {
+    case 0:
+        printf("quantos usuarios ira cadastrar");
+        scanf("%d", &n);
+        vAtletas *vetor = alocar_struct(n);
+    case 1:
+       printf("\n--- Ordem Original ---\n");
+       for (int i = 0; i < n; i++)
+       {
         printf("Nome: %s, Matricula: %d, tempo:  %d\n", indices[i]->nome, indices[i]->matricula, indices[i]->tempo);
-    }
-
-    printf("\n--- Ordem Ranking ---\n");
+        }
+        break;
+    case 2:
+        printf("\n--- Ordem Ranking ---\n");
     for (int i = 0; i < n; i++)
     {
         printf("Nome: %s, Matricula: %d, tempo:  %d\n", indices_ranking[i]->nome, indices_ranking[i]->matricula, indices_ranking[i]->tempo);
     }
-
-    printf("\n--- Ordem Nome ---\n");
+    break;
+    case 3:
+        printf("\n--- Ordem Nome ---\n");
     for (int i = 0; i < n; i++)
     {
         printf("Nome: %s, Matricula: %d, tempo:  %d\n", indices_nome[i]->nome, indices_nome[i]->matricula, indices_nome[i]->tempo);
     }
-
-    /*
+    break;
+    case 4:
+        /*
     Filtrar atletas com tempo superior a um limite:
      O usuário informa um tempo limite em minutos.
     */
@@ -142,6 +121,8 @@ int main()
             printf("Nome: %s, Matricula: %d, tempo:  %d\n", indices_ranking[j]->nome, indices_ranking[j]->matricula, indices_ranking[j]->tempo);
         }
     }
+    break;
+    case 5: 
 
     for (int i = 0; i < n; i++)
     {
@@ -151,5 +132,53 @@ int main()
     free(indices);
     free(indices_ranking);
     free(indices_nome);
-    return 1;
+    printf("saindo...");
+    }
+
+}while(resposta == 5);
+
+return 1;
+}
+
+vAtletas* alocar_struct(int n){
+    
+    vAtletas *vetor = (vAtletas *)malloc(n * sizeof(vAtletas)); // Para os dados
+    if (!vetor)
+    {
+        printf("erro");
+    }
+
+    for (int i = 0; i < n; i++)
+    {
+        char nome_buffer[100];
+        printf("\n--- Atleta %d ---\n", i + 1);
+        printf("Digite o nome: ");
+        scanf("%s", nome_buffer);
+
+        vetor[i].nome = (char *)malloc((strlen(nome_buffer) + 1) * sizeof(char));
+        if (!vetor[i].nome)
+        {
+            return 1;
+        }
+
+        strcpy(vetor[i].nome, nome_buffer);
+
+        printf("Digite a matricula: ");
+        scanf("%d", &vetor[i].matricula);
+
+        printf("Digite o tempo: ");
+        scanf("%d", &vetor[i].tempo);
+    }
+
+    return vetor;
+}
+vAtletas** alocar_struct_atletas(int n, vAtletas *vetor){
+    
+    vAtletas **indices = (vAtletas **)malloc(n * sizeof(vAtletas *)); // para os ponteiros
+    if (!indices)
+    {
+        free(vetor);
+        return 0;
+    }
+    return **indices;
 }
