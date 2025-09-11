@@ -2,6 +2,7 @@
 
 #include <stdio.h>
 #include "ponto.h" // Só precisamos incluir a interface!
+#include "circulo.h" // Só precisamos incluir a interface!
 
 int main()
 {

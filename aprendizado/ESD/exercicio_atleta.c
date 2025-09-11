@@ -85,11 +85,6 @@ int main()
         }
 
         case 2:
-            if (n_total == 0)
-            {
-                printf("\nNenhum atleta cadastrado.\n");
-                break;
-            }
             printf("\n--- Ordem de Cadastro ---\n");
             for (int i = 0; i < n_total; i++)
             {
