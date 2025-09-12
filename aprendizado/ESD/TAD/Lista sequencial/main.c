@@ -11,4 +11,5 @@ void main()
 
     exibe_lista_sequencial(lista);
 
+    liberaLista(lista);
 }
