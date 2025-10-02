@@ -15,7 +15,7 @@ PilhaSequencial *cria_pilha()
     PilhaSequencial *p = (PilhaSequencial *)malloc(sizeof(PilhaSequencial));
     if (p != NULL)
     {
-        p->topo = 0;
+        p->topo = -1;
     }
     return 0;
 }
@@ -32,7 +32,7 @@ int pilha_cheia(PilhaSequencial *p)
 
 int pilha_vazia(PilhaSequencial *p)
 {
-    return (p->topo == 0);
+    return (p->topo == -1);
 }
 // Operação PUSH significa empilhar na pilha
 int push_seq(PilhaSequencial *p, int valor)
